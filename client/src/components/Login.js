@@ -19,7 +19,7 @@ export default function Login() {
       <div className="max-w-md mx-auto pt-28 pb-10 px-6">
         <div className="flex items-center justify-between mb-12">
           <div className="flex items-center">
-            <img src={logo} alt="My App Logo" className="w-24 h-24" />
+            {<img src={logo} alt="My App Logo" className="w-24 h-24" />}
             <h1 className="text-white text-4xl font-bold ml-3">Proctorly</h1>
           </div>
         </div>

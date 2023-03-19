@@ -13,7 +13,7 @@ export default function Home() {
         <h2 class="text-2xl font-4 font-semibold lh-6 ld-04 pb-11 text-gray-700 text-center">
           Proctorly is a free to use app which maintains academic discipline
           <br />
-          and prevent unethical behavior with AI quizzing
+          and prevent unethical behavior with AI
         </h2>
         <div className="ml-6 text-center">
         <Link
@@ -49,7 +49,7 @@ export default function Home() {
           <p class="pt-2 value-text text-md text-gray-200 fkrr1">
             By monitoring these addresses, our AI system can quickly
             detect any suspicious activities and stop potential
-            cheaters from accessing the quiz.
+            cheaters from accessing the exam.
           </p>
         </div>
         <div class="ktq4">
@@ -68,7 +68,7 @@ export default function Home() {
           </h3>
           <p class="pt-2 value-text text-md text-gray-200 fkrr1">
             Proctorly uses the latest encryption technology to ensure
-            that all data transmitted during the quiz is fully
+            that all data transmitted during the exam is fully
             encrypted and secure.
           </p>
         </div>
@@ -78,7 +78,7 @@ export default function Home() {
           </h3>
           <p class="pt-2 value-text text-md text-gray-200 fkrr1">
             Proctorly is optimized to run smoothly on devices and
-            platforms, ensuring that students can take the quiz
+            platforms, ensuring that students can take the exam
             without any lag or delays.
           </p>
         </div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Questions from './Questions'
+import Countdown from 'react-countdown';
 
 import { MoveNextQuestion, MovePrevQuestion } from '../hooks/FetchQuestion';
 import { PushAnswer } from '../hooks/setResult';
@@ -49,9 +50,14 @@ export default function Quiz() {
         return <Navigate to={'/result'} replace={true}></Navigate>
     }
 
+    const Completionist = () => <span>Your Time Is Up!</span>;
+
   return (
     <div className='container'>
-        <h1 className='title text-light'>Quiz Application</h1>
+        <h1 className='title text-light'>Proctorly</h1>
+        <Countdown date={Date.now() + 120000} className='text-light'>
+            <Completionist />
+        </Countdown>
 
         {/* display questions */}
         <Questions onChecked={onChecked} />
