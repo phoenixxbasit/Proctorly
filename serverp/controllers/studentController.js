@@ -27,7 +27,7 @@ const loginstudent = async (req, res) => {
       .status(400)
       .json({ message: "Username or password is incorrect" });
   }
-  res.json({ userID: user._id, username: user.username, type: user.type });
+  res.status(200).json({ userID: user._id, username: user.username, type: user.type });
 };
 
 export { createstudent, loginstudent };

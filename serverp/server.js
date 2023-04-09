@@ -5,7 +5,7 @@ import {
   studentRouter,
   instructorRouter,
   questionRouter,
-  resultRouter
+  resultRouter,
 } from "./router/route.js";
 import connect from "./database/conn.js";
 import { config } from "dotenv";

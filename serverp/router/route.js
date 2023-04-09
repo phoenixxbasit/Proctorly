@@ -21,7 +21,8 @@ questionRouter.get("/insertmany", questionController.insertmanyquestions);
 questionRouter.post("/insert", questionController.insertquestion);
 questionRouter.get("/delete/:id", questionController.deleteQuestion);
 
-resultRouter.post("/", resultController.getresult);
+resultRouter.get("/:username", resultController.getresultbyusername);
+resultRouter.get("/id/:id", resultController.getresultbyid);
 resultRouter.get("/", resultController.getresults);
 resultRouter.post("/insert", resultController.insertresult);
 resultRouter.get("/delete/:id", resultController.deleteresult);
