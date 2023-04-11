@@ -10,8 +10,10 @@ export default function Main() {
 
   useEffect(() => {
     async function fetchResults() {
-      const response = await axios.get(`http://localhost:5000/api/result/${user.username}`);
-      console.log(response.data)
+      const response = await axios.get(
+        `http://localhost:5000/api/result/${user.username}`
+      );
+      console.log(response.data);
       setResults(response.data.result);
     }
     fetchResults();
@@ -19,6 +21,12 @@ export default function Main() {
 
   return (
     <div className="flex flex-row h-screen bg-gray-100">
+      <Link
+        to="/"
+        className="absolute top-0 right-0 m-5 bg-green-500 text-white px-6 py-3 rounded-md font-medium mr-4 text-center hover:bg-green-600 transition-colors duration-300"
+      >
+        Logout
+      </Link>
       {/* Sidebar */}
       <div className="w-64 bg-gray-900 text-white flex flex-col">
         <div className="p-6 flex justify-center">
@@ -33,9 +41,13 @@ export default function Main() {
           <h2 className="text-lg font-bold mb-4">Previous Results</h2>
           <ul className="list-disc list-inside">
             {results.map((result, index) => (
-              <li key={index} className="mb-2 hover:bg-gray-700 rounded-md p-3 cursor-pointer transition-colors duration-300">
+              <li
+                key={index}
+                className="mb-2 hover:bg-gray-700 rounded-md p-3 cursor-pointer transition-colors duration-300"
+              >
                 <Link to={`/result/${result._id}`}>
-                  <span className="font-bold">Exam {index+1}:</span> Score {result.points}
+                  <span className="font-bold">Exam {index + 1}:</span> Score{" "}
+                  {result.points}
                 </Link>
               </li>
             ))}

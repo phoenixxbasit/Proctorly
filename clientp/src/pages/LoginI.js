@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { setType, setUserId } from "../redux/user_reducer";
+import { setType, setUserId, setUsername as susername } from "../redux/user_reducer";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/Logo.png";
@@ -23,9 +23,11 @@ export default function LoginI() {
       });
       setCookies("userID", response.data.userID);
       window.localStorage.setItem("username", response.data.username);
-      dispatch(setUserId(response.data.user_id));
+      console.log(response.data)
+      dispatch(setUserId(response.data.userID));
+      dispatch(susername(response.data.username));
       dispatch(setType("Instructor"));
-      navigate("/main");
+      navigate("/instructor/main");
 
     } catch (error) {
       alert("Invalid username or password");
