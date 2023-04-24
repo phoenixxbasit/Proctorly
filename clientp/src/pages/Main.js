@@ -3,6 +3,8 @@ import logo from "../assets/Logo.png";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 export default function Main() {
   const user = useSelector((state) => state.user);
@@ -21,6 +23,7 @@ export default function Main() {
 
   return (
     <div className="flex flex-row h-screen bg-gray-100">
+      <ToastContainer />
       <Link
         to="/"
         className="absolute top-0 right-0 m-5 bg-green-500 text-white px-6 py-3 rounded-md font-medium mr-4 text-center hover:bg-green-600 transition-colors duration-300"

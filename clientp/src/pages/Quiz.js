@@ -5,17 +5,22 @@ import Countdown from "react-countdown";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { pushResultAction } from "../redux/result_reducer";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 
 const Quiz = () => {
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
+  const [lencheat, setlencheat] = useState(0);
   const [finished, setFinished] = useState(false);
   const [loading, setLoading] = useState(true);
   const [t, sett] = useState(Date.now() + 120000);
   const user = useSelector((state) => state.user.username);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  let newCheating;
+  const maxCheat = 30;
   console.log(user);
 
   useEffect(() => {
@@ -30,13 +35,61 @@ const Quiz = () => {
       setLoading(false);
     };
     fetchQuestions();
+    document.addEventListener("visibilitychange", handleTabSwitch, false);
+    return () => {
+      // Remove event listener for the visibilitychange event
+      document.removeEventListener("visibilitychange", handleTabSwitch);
+    };
   }, []);
+
+  const handleTabSwitch = async () => {
+    if (document.visibilityState === "visible")
+      await axios.get("http://localhost:5002/detecttab");
+  };
+
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleDetect();
+    }, 10000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [lencheat]);
+
+  const handleDetect = async () => {
+    const res = await axios.get("http://localhost:5002/detect");
+    newCheating = res.data;
+
+    if (newCheating.length > lencheat) {
+      let newCheats = newCheating.slice(lencheat);
+      newCheats.map((value, index) =>
+        toast.warn(`${value} is detected ${lencheat + index}/${maxCheat}`, {
+          position: "bottom-right",
+          autoClose: 5000,
+          closeOnClick: true,
+          pauseOnHover: true,
+          theme: "dark",
+          onClose: () => {
+            if ((newCheating.length > maxCheat) &&(index === (newCheats.length -1))) {
+              alert(`Ending Exam Due to ${newCheating.length} Cheating Penalties`);
+              handleSubmit(true);
+            }
+          }
+        })
+      );
+    }
+    console.log(lencheat, newCheating);
+    setlencheat(() => newCheating.length);
+    
+  };
 
   const handleAnswer = (answerIndex) => {
     setUserAnswers([...userAnswers, answerIndex]);
   };
 
-  const generateResult = (userAnswers) => {
+  const generateResult = (userAnswers, cheatstatus = false) => {
     const result = {
       username: user,
       results: [],
@@ -59,8 +112,13 @@ const Quiz = () => {
       result.results.push("W");
     }
 
-    result.status =
-      result.points / questions.length >= 0.5 ? "Passed" : "Failed";
+    result.penalties = newCheating;
+    if (cheatstatus) {
+      result.status = "Failed (Cheated)";
+    } else {
+      result.status =
+        result.points / questions.length >= 0.5 ? "Passed" : "Failed";
+    }
 
     return result;
   };
@@ -77,9 +135,9 @@ const Quiz = () => {
     }
   };
 
-  const handleSubmit = async () => {
-    setFinished(true)
-    const result = generateResult(userAnswers);
+  const handleSubmit = async (cheatstatus = false) => {
+    setFinished(true);
+    const result = generateResult(userAnswers, cheatstatus);
     const res = await axios.post(
       `${process.env.REACT_APP_SERVER_HOSTNAME}/api/result/insert`,
       result
@@ -113,12 +171,10 @@ const Quiz = () => {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen bg-black text-white">
+      <ToastContainer />
+
       <div className="text-6xl mb-6 font-bold">
-        <Countdown
-          date={t}
-          renderer={renderer}
-          onComplete={handleSubmit}
-        />
+        <Countdown date={t} renderer={renderer} onComplete={handleSubmit} />
       </div>
       {finished ? (
         <div className="flex flex-col justify-center items-center">
