@@ -20,7 +20,7 @@ const Quiz = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   let newCheating;
-  const maxCheat = 30;
+  const maxCheat = 4;
   console.log(user);
 
   useEffect(() => {
@@ -119,6 +119,7 @@ const Quiz = () => {
       result.status =
         result.points / questions.length >= 0.5 ? "Passed" : "Failed";
     }
+    console.log(result)
 
     return result;
   };

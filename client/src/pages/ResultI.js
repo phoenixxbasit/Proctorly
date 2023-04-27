@@ -5,6 +5,22 @@ import {Link} from "react-router-dom";
 export default function Result() {
   const [results, setResults] = useState([]);
 
+  function countDuplicates(arr) {
+    const dict = {};
+    
+    for (let i = 0; i < arr.length; i++) {
+      const key = arr[i];
+      
+      if (dict[key]) {
+        dict[key]++;
+      } else {
+        dict[key] = 1;
+      }
+    }
+    return Object.entries(dict).map(([key, value]) => `${key}: ${value}`);
+  }
+  
+
   useEffect(() => {
     async function fetchResults() {
       const response = await axios.get("http://localhost:5000/api/result");
@@ -35,7 +51,7 @@ export default function Result() {
             </p>
             <p>
               <span className="font-bold">Penalties:</span>{" "}
-              {result.penalties.join(", ") || "None"}
+              {countDuplicates(result.penalties).join(", ") || "None"}
             </p>
             <p>
               <span className="font-bold">Results:</span>{" "}
