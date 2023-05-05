@@ -143,6 +143,10 @@ const Quiz = () => {
       `${process.env.REACT_APP_SERVER_HOSTNAME}/api/result/insert`,
       result
     );
+
+    await axios.get("http://localhost:5002/clear");
+
+
     dispatch(pushResultAction(result));
     navigate("/main");
     console.log(res.data);

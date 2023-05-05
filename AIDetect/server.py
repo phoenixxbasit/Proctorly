@@ -22,5 +22,10 @@ def get_tab_detections():
     detection_results.append("Tab Switch")
     return jsonify(detection_results)
 
+@app.route("/clear", methods=["GET"])
+def clear_detections():
+    detection_results.clear()
+    return "Detection Cleared"
+
 if __name__ == "__main__":
     app.run(debug=True, port=5002)
