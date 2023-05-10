@@ -40,6 +40,7 @@ const insertresult = async (req, res) => {
 
 const deleteresult = async (req, res) => {
   const { id } = req.params;
+  // Exception Handling
   try {
     const deletedResult = await resultModel.findByIdAndDelete(id);
     if (!deletedResult) {

@@ -27,6 +27,7 @@ const insertquestion = async (req, res) => {
 };
 
 const insertmanyquestions = async (req, res) => {
+  // Exception Handling
   try {
     const q = await questionModel.insertMany(manyquestions);
     res.json({ message: "Questions Added successfully" });
@@ -37,6 +38,7 @@ const insertmanyquestions = async (req, res) => {
 
 const deleteQuestion = async (req, res) => {
   const { id } = req.params;
+  // Exception Handling
   try {
     const deletedQuestion = await questionModel.findByIdAndDelete(id);
     if (!deletedQuestion) {

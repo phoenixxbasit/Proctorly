@@ -30,6 +30,7 @@ app.use("/api/question", questionRouter);
 app.use("/api/result", resultRouter);
 
 app.get("/", (req, res) => {
+  // Exception Handling
   try {
     res.json("Get Request");
   } catch (error) {
@@ -40,6 +41,7 @@ app.get("/", (req, res) => {
 /** start server only when we have valid connection */
 connect()
   .then(() => {
+    // Exception Handling
     try {
       app.listen(port, () => {
         console.log(`Server connected to http://localhost:${port}`);

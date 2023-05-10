@@ -16,6 +16,7 @@ export default function LoginI() {
 
   const handleLogin = async (event) => {
     event.preventDefault();
+    // Exception Handling
     try {
       const response = await axios.post(`${process.env.REACT_APP_SERVER_HOSTNAME}/api/intructor/login`, {
         username,
